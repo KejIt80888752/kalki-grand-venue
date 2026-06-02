@@ -100,6 +100,19 @@ function spawnParticle() {
 for (let i = 0; i < 12; i++) setTimeout(spawnParticle, i * 150);
 setInterval(spawnParticle, 700);
 
+// ── Bottom nav active state ──
+const bnavItems = document.querySelectorAll('.bnav-item[data-section]');
+const bnavObs   = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      bnavItems.forEach(b => b.classList.remove('active'));
+      const match = document.querySelector(`.bnav-item[data-section="${e.target.id}"]`);
+      if (match) match.classList.add('active');
+    }
+  });
+}, { threshold: 0.4 });
+sections.forEach(s => bnavObs.observe(s));
+
 // ── Smooth scroll ──
 document.querySelectorAll('a[href^="#"]').forEach(a => {
   a.addEventListener('click', e => {
