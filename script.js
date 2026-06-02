@@ -1,6 +1,27 @@
 // ── AOS Init ──
 AOS.init({ duration: 750, easing: 'ease-out-cubic', once: true, offset: 50 });
 
+// ── Theme Toggle ──
+const html        = document.documentElement;
+const themeIcon   = document.getElementById('themeIcon');
+const mobileIcon  = document.getElementById('mobileThemeIcon');
+const saved       = localStorage.getItem('kalki-theme') || 'dark';
+if (saved === 'light') applyTheme('light');
+
+function applyTheme(mode) {
+  html.setAttribute('data-theme', mode);
+  localStorage.setItem('kalki-theme', mode);
+  const icon = mode === 'light' ? 'fa-moon' : 'fa-sun';
+  if (themeIcon)  { themeIcon.className  = `fas ${icon}`; }
+  if (mobileIcon) { mobileIcon.className = `fas ${icon}`; }
+}
+function toggleTheme() {
+  const current = html.getAttribute('data-theme') || 'dark';
+  applyTheme(current === 'dark' ? 'light' : 'dark');
+}
+document.getElementById('themeToggle')?.addEventListener('click', toggleTheme);
+document.getElementById('mobileThemeToggle')?.addEventListener('click', toggleTheme);
+
 // ── Cursor glow ──
 const glow = document.createElement('div');
 glow.className = 'cursor-glow';
