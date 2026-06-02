@@ -84,7 +84,7 @@ document.querySelectorAll('.service-card').forEach(card => {
 const bg = document.getElementById('particles-bg');
 function spawnParticle() {
   const p = document.createElement('div');
-  p.className = 'particle';
+  p.className = 'particle ' + (Math.random() > 0.4 ? 'gold-p' : 'purple-p');
   const size = Math.random() * 3 + 1;
   p.style.cssText = `
     left: ${Math.random() * 100}vw;
