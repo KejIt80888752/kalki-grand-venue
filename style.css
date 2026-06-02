@@ -391,23 +391,29 @@ h3 { font-size: 1.3rem; font-weight: 600; }
   100% { opacity: 1;   transform: scale(1.06); }
 }
 
-/* perspective grid */
-#hero::after {
-  content: '';
+/* bokeh container */
+#hero-bokeh {
   position: absolute;
   inset: 0;
-  background-image:
-    linear-gradient(rgba(212,175,55,0.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(212,175,55,0.05) 1px, transparent 1px);
-  background-size: 60px 60px;
   z-index: 0;
-  mask-image: radial-gradient(ellipse at center, black 30%, transparent 80%);
-  animation: gridDrift 22s linear infinite;
+  overflow: hidden;
+  pointer-events: none;
 }
-@keyframes gridDrift {
-  0%   { transform: perspective(600px) rotateX(10deg) translateY(0); }
-  100% { transform: perspective(600px) rotateX(10deg) translateY(60px); }
+.bokeh-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(60px);
+  animation: bokehFloat ease-in-out infinite;
+  will-change: transform, opacity;
 }
+@keyframes bokehFloat {
+  0%   { transform: translateY(0px)   scale(1);    opacity: var(--op-low); }
+  33%  { transform: translateY(-30px) scale(1.08); opacity: var(--op-high); }
+  66%  { transform: translateY(18px)  scale(0.96); opacity: var(--op-mid); }
+  100% { transform: translateY(0px)   scale(1);    opacity: var(--op-low); }
+}
+/* light mode bokeh softer */
+[data-theme="light"] .bokeh-orb { filter: blur(70px); }
 
 .hero-content {
   position: relative;

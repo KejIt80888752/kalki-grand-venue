@@ -121,6 +121,46 @@ function spawnParticle() {
 for (let i = 0; i < 12; i++) setTimeout(spawnParticle, i * 150);
 setInterval(spawnParticle, 700);
 
+// ── Hero Bokeh Orbs ──
+(function spawnBokeh() {
+  const container = document.getElementById('hero-bokeh');
+  if (!container) return;
+
+  const orbs = [
+    // [size, left%, top%, colorRGBA, opLow, opHigh, opMid, duration, delay]
+    [280, 10,  15, '124,58,237',  0.10, 0.22, 0.16, 9,  0],
+    [200, 75,  10, '212,175,55',  0.08, 0.18, 0.12, 11, 1.5],
+    [180, 55,  70, '124,58,237',  0.08, 0.20, 0.14, 13, 0.5],
+    [160, 20,  75, '212,175,55',  0.07, 0.16, 0.11, 10, 2],
+    [240, 85,  50, '76,29,149',   0.09, 0.18, 0.13, 14, 1],
+    [140, 40,  5,  '196,181,253', 0.06, 0.15, 0.10, 8,  3],
+    [120, 90,  80, '212,175,55',  0.07, 0.16, 0.11, 12, 2.5],
+    [200, 5,   45, '76,29,149',   0.08, 0.18, 0.13, 10, 0.8],
+    [160, 60,  40, '196,181,253', 0.06, 0.14, 0.10, 15, 1.2],
+    [100, 30,  90, '212,175,55',  0.06, 0.15, 0.10, 9,  3.5],
+    [300, 50,  50, '124,58,237',  0.05, 0.12, 0.08, 16, 0.3],
+    [130, 70,  20, '212,175,55',  0.07, 0.16, 0.11, 11, 2.8],
+  ];
+
+  orbs.forEach(([size, left, top, rgb, opL, opH, opM, dur, del]) => {
+    const el = document.createElement('div');
+    el.className = 'bokeh-orb';
+    el.style.cssText = `
+      width: ${size}px;
+      height: ${size}px;
+      left: ${left}%;
+      top: ${top}%;
+      background: radial-gradient(circle, rgba(${rgb},${opH * 1.5}) 0%, rgba(${rgb},0) 70%);
+      --op-low:  ${opL};
+      --op-high: ${opH};
+      --op-mid:  ${opM};
+      animation-duration: ${dur}s;
+      animation-delay: -${del}s;
+    `;
+    container.appendChild(el);
+  });
+})();
+
 // ── Bottom nav active state ──
 const bnavItems = document.querySelectorAll('.bnav-item[data-section]');
 const bnavObs   = new IntersectionObserver(entries => {
